@@ -9,16 +9,16 @@ import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.anyInt;
 
 @RunWith(JUnitParamsRunner.class)
 public class PointTest {
+    private int anyInt = -1;
 
     @Test
     public void itShouldHaveXCoordinate() {
         int x = 1;
 
-        Point point = new Point(x, anyInt());
+        Point point = new Point(x, anyInt);
 
         assertThat(point.getX(), is(x));
     }
@@ -27,7 +27,7 @@ public class PointTest {
     public void itShouldHaveYCoordinate() {
         int y = 2;
 
-        Point point = new Point(anyInt(), y);
+        Point point = new Point(anyInt, y);
 
         assertThat(point.getY(), is(y));
     }
@@ -71,9 +71,9 @@ public class PointTest {
 
     private Object[][] unequalPoints() {
         return new Object[][]{
-                {new Point(anyInt(), anyInt()), null},
-                {new Point(1, anyInt()), new Point(2, anyInt())},
-                {new Point(anyInt(), 1), new Point(anyInt(), 2)},
+                {new Point(anyInt, anyInt), null},
+                {new Point(1, anyInt), new Point(2, anyInt)},
+                {new Point(anyInt, 1), new Point(anyInt, 2)},
                 {new Point(1, 2), new Point(3, 4)}
         };
     }
