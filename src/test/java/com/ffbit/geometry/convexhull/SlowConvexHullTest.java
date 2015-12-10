@@ -28,7 +28,10 @@ public class SlowConvexHullTest {
         return new Object[][]{
                 {asList(p(1, 4), p(4, 10), p(3, 7), p(6, 9), p(7, 3), p(10, 8),
                         p(11, 4), p(8, 6), p(5, 2), p(4, 5)),
-                        asList(p(1, 4), p(4, 10), p(10, 8), p(11, 4), p(5, 2))}
+                        asList(p(1, 4), p(4, 10), p(10, 8), p(11, 4), p(5, 2))},
+                {asList(p(2, 8), p(3, 8), p(4, 8), p(6, 8), p(5, 8), p(3, 7),
+                        p(4, 7), p(4, 6), p(5, 7)),
+                        asList(p(2, 8), p(6, 8), p(4, 6))}
         };
     }
 

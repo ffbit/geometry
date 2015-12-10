@@ -49,6 +49,17 @@ public class LineSegment {
                 - (b.getY() - a.getY()) * (point.getX() - a.getX());
     }
 
+    public boolean pointLiesOnSegment(Point point) {
+        return twiceTheSignedArea(point) == 0
+                && within(a.getX(), point.getX(), b.getX())
+                && within(a.getY(), point.getY(), b.getY());
+    }
+
+    private boolean within(int firstBoundary, int value, int secondBoundary) {
+        return Math.min(firstBoundary, secondBoundary) <= value
+                && Math.max(firstBoundary, secondBoundary) >= value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

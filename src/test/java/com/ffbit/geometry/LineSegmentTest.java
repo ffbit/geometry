@@ -145,4 +145,74 @@ public class LineSegmentTest {
         };
     }
 
+    @Test
+    @Parameters(method = "pointsOnSegment")
+    public void itShouldLieOnSegment(LineSegment segment, Point point) {
+        assertThat(segment.pointLiesOnSegment(point), is(true));
+    }
+
+    private Object[][] pointsOnSegment() {
+        return new Object[][]{
+                {new LineSegment(new Point(1, 2), new Point(3, 4)),
+                        new Point(2, 3)},
+                {new LineSegment(new Point(1, 2), new Point(3, 4)),
+                        new Point(1, 2)},
+                {new LineSegment(new Point(1, 2), new Point(3, 4)),
+                        new Point(3, 4)},
+
+                {new LineSegment(new Point(1, 1), new Point(3, 1)),
+                        new Point(2, 1)},
+                {new LineSegment(new Point(1, 1), new Point(3, 1)),
+                        new Point(1, 1)},
+                {new LineSegment(new Point(1, 1), new Point(3, 1)),
+                        new Point(3, 1)},
+
+                {new LineSegment(new Point(1, 0), new Point(1, 4)),
+                        new Point(1, 1)},
+                {new LineSegment(new Point(1, 0), new Point(1, 4)),
+                        new Point(1, 2)},
+                {new LineSegment(new Point(1, 0), new Point(1, 4)),
+                        new Point(1, 3)},
+                {new LineSegment(new Point(1, 0), new Point(1, 4)),
+                        new Point(1, 4)}
+        };
+    }
+
+    @Test
+    @Parameters(method = "pointsNotOnSegment")
+    public void itShouldNotLieOnSegment(LineSegment segment, Point point) {
+        assertThat(segment.pointLiesOnSegment(point), is(false));
+    }
+
+    private Object[][] pointsNotOnSegment() {
+        return new Object[][]{
+                {new LineSegment(new Point(1, 2), new Point(3, 4)),
+                        new Point(0, 1)},
+                {new LineSegment(new Point(1, 2), new Point(3, 4)),
+                        new Point(4, 5)},
+                {new LineSegment(new Point(1, 2), new Point(3, 4)),
+                        new Point(1, 3)},
+                {new LineSegment(new Point(1, 2), new Point(3, 4)),
+                        new Point(3, 3)},
+
+                {new LineSegment(new Point(1, 1), new Point(3, 1)),
+                        new Point(0, 1)},
+                {new LineSegment(new Point(1, 1), new Point(3, 1)),
+                        new Point(4, 1)},
+                {new LineSegment(new Point(1, 1), new Point(3, 1)),
+                        new Point(2, 0)},
+                {new LineSegment(new Point(1, 1), new Point(3, 1)),
+                        new Point(2, 4)},
+
+                {new LineSegment(new Point(1, 0), new Point(1, 4)),
+                        new Point(1, 5)},
+                {new LineSegment(new Point(1, 0), new Point(1, 4)),
+                        new Point(1, -1)},
+                {new LineSegment(new Point(1, 0), new Point(1, 4)),
+                        new Point(0, 3)},
+                {new LineSegment(new Point(1, 0), new Point(1, 4)),
+                        new Point(2, 4)}
+        };
+    }
+
 }

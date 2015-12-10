@@ -34,7 +34,8 @@ public class SlowConvexHull {
                         continue;
                     }
 
-                    if (!edge.pointIsToTheRightSide(points.get(i))) {
+                    if (!(edge.pointIsToTheRightSide(points.get(i))
+                            || edge.pointLiesOnSegment(points.get(i)))) {
                         valid = false;
                     }
                 }
