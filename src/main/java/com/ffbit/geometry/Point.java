@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * @see <a href="https://en.wikipedia.org/wiki/Point_(geometry)">Point</a>.
  */
-public class Point {
+public class Point implements Comparable<Point> {
     private final int x;
     private final int y;
 
@@ -20,6 +20,17 @@ public class Point {
 
     public int getY() {
         return y;
+    }
+
+    @Override
+    public int compareTo(Point other) {
+        int cmp = Integer.compare(x, other.x);
+
+        if (cmp != 0) {
+            return cmp;
+        }
+
+        return Integer.compare(y, other.y);
     }
 
     @Override

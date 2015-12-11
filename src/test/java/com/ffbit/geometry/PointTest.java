@@ -5,6 +5,8 @@ import junitparams.Parameters;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
+
 import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -75,6 +77,27 @@ public class PointTest {
                 {new Point(1, anyInt), new Point(2, anyInt)},
                 {new Point(anyInt, 1), new Point(anyInt, 2)},
                 {new Point(1, 2), new Point(3, 4)}
+        };
+    }
+
+    @Test
+    @Parameters(method = "comparablePoints")
+    public void itShouldBeComparable(Point[] notSorted, Point[] sorted) {
+        Arrays.sort(notSorted);
+
+        assertThat(notSorted, is(sorted));
+    }
+
+    private Object[][] comparablePoints() {
+        return new Object[][]{
+                {new Point[]{new Point(anyInt, anyInt)},
+                        new Point[]{new Point(anyInt, anyInt)}},
+                {new Point[]{new Point(anyInt, anyInt), new Point(anyInt, anyInt)},
+                        new Point[]{new Point(anyInt, anyInt), new Point(anyInt, anyInt)}},
+                {new Point[]{new Point(2, anyInt), new Point(1, anyInt)},
+                        new Point[]{new Point(1, anyInt), new Point(2, anyInt)}},
+                {new Point[]{new Point(anyInt, 1), new Point(anyInt, 0)},
+                        new Point[]{new Point(anyInt, 0), new Point(anyInt, 1)}}
         };
     }
 
