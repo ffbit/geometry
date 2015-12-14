@@ -8,6 +8,9 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
 
 import java.util.Optional;
 
+/**
+ * Checks if all points in a ring make clockwise turn.
+ */
 public class IsClockwiseRing extends TypeSafeDiagnosingMatcher<Point[]> {
 
     @Override
