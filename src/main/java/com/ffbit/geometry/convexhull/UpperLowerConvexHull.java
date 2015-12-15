@@ -7,8 +7,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class UpperLowerConvexHull {
+public class UpperLowerConvexHull implements ConvexHull {
 
+    @Override
     public List<Point> convexHull(List<Point> points) {
         List<Point> sortedPoints = sortPoints(points);
 

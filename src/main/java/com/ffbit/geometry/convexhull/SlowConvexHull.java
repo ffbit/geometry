@@ -13,8 +13,9 @@ import java.util.List;
  * "Computational Geometry: Algorithms and Applications" book.
  * </p>
  */
-public class SlowConvexHull {
+public class SlowConvexHull implements ConvexHull {
 
+    @Override
     public List<Point> convexHull(List<Point> points) {
         List<LineSegment> convexHullEdges = new ArrayList<>();
 
