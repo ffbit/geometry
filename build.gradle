@@ -49,8 +49,13 @@ allprojects {
 project('geometry-matchers') {
     dependencies {
         compile "org.hamcrest:hamcrest-all:1.3"
-        compile rootProject
+        compile project(":geometry-primitives")
     }
+}
+
+dependencies {
+    compile project(":geometry-primitives")
+    testCompile project(":geometry-matchers")
 }
 
 buildscript {
