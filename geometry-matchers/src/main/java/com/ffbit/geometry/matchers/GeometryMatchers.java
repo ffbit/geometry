@@ -11,4 +11,14 @@ public class GeometryMatchers {
         return IsClockwiseRing.clockwiseRing();
     }
 
+    public static Matcher<List<Point>> shiftedSequence(
+            List<Point> expectedSequence) {
+        return IsShiftedSequence.shiftedSequence(expectedSequence);
+    }
+
+    public static Matcher<List<Point>> shiftedSequence(
+            Point... expectedSequence) {
+        return IsShiftedSequence.shiftedSequence(expectedSequence);
+    }
+
 }
