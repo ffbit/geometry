@@ -6,17 +6,18 @@ import org.hamcrest.Factory;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
  * Checks if all points in a ring make clockwise turn.
  */
-public class IsClockwiseRing extends TypeSafeDiagnosingMatcher<Point[]> {
+public class IsClockwiseRing extends TypeSafeDiagnosingMatcher<List<Point>> {
 
     @Override
-    protected boolean matchesSafely(Point[] points,
+    protected boolean matchesSafely(List<Point> points,
                                     Description mismatchDescription) {
-        if (points.length < 3) {
+        if (points.size() < 3) {
             mismatchDescription.appendText("not enough points to make a ring ")
                     .appendValue(points);
             return false;
@@ -36,14 +37,16 @@ public class IsClockwiseRing extends TypeSafeDiagnosingMatcher<Point[]> {
         return false;
     }
 
-    private Optional<Point> findNonClockwisePoint(Point[] points) {
-        for (int i = 0; i < points.length; i++) {
-            int aIndex = i;
-            int bIndex = (i + 1) % points.length;
-            int cIndex = (i + 2) % points.length;
+    private Optional<Point> findNonClockwisePoint(List<Point> points) {
+        int length = points.size();
 
-            if (!clockwise(points[aIndex], points[bIndex], points[cIndex])) {
-                return Optional.of(points[cIndex]);
+        for (int i = 0; i < length; i++) {
+            int a = i;
+            int b = (i + 1) % length;
+            int c = (i + 2) % length;
+
+            if (!clockwise(points.get(a), points.get(b), points.get(c))) {
+                return Optional.of(points.get(c));
             }
         }
 
@@ -65,7 +68,7 @@ public class IsClockwiseRing extends TypeSafeDiagnosingMatcher<Point[]> {
     }
 
     @Factory
-    public static Matcher<Point[]> clockwiseRing() {
+    public static Matcher<List<Point>> clockwiseRing() {
         return new IsClockwiseRing();
     }
 
