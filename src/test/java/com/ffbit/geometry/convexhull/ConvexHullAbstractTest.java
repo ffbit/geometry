@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static com.ffbit.geometry.matchers.GeometryMatchers.clockwiseRing;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -23,6 +24,7 @@ public abstract class ConvexHullAbstractTest {
     @Parameters(method = "points")
     public void itShouldFindConvexHull(List<Point> points,
                                        List<Point> convexHullPoints) {
+        assertThat(convexHullAlgorithm.convexHull(points), is(clockwiseRing()));
         assertThat(convexHullAlgorithm.convexHull(points), is(convexHullPoints));
     }
 
