@@ -10,6 +10,10 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import static com.ffbit.geometry.matchers.IsShiftedSequence.shiftedSequence;
 import static org.hamcrest.Matchers.hasToString;
 import static org.hamcrest.Matchers.is;
@@ -24,53 +28,53 @@ public class IsShiftedSequenceTest {
 
     @Test
     @Parameters(method = "shiftedSequences")
-    public void itShouldMatchShiftedSequence(Point[] actualSequence,
-                                             Point[] expectedSequence) {
+    public void itShouldMatchShiftedSequence(List<Point> actualSequence,
+                                             List<Point> expectedSequence) {
         assertThat(actualSequence, is(shiftedSequence(expectedSequence)));
     }
 
     private Object[][] shiftedSequences() {
         return new Object[][]{
-                {new Point[]{}, new Point[]{}},
+                {asList(), asList()},
 
-                {new Point[]{p(0, 1)}, new Point[]{p(0, 1)}},
+                {asList(p(0, 1)), asList(p(0, 1))},
 
-                {new Point[]{p(0, 1), p(2, 3)}, new Point[]{p(0, 1), p(2, 3)}},
-                {new Point[]{p(0, 1), p(2, 3)}, new Point[]{p(2, 3), p(0, 1)}},
-                {new Point[]{p(2, 3), p(0, 1)}, new Point[]{p(0, 1), p(2, 3)}},
-                {new Point[]{p(2, 3), p(0, 1)}, new Point[]{p(2, 3), p(0, 1)}},
+                {asList(p(0, 1), p(2, 3)), asList(p(0, 1), p(2, 3))},
+                {asList(p(0, 1), p(2, 3)), asList(p(2, 3), p(0, 1))},
+                {asList(p(2, 3), p(0, 1)), asList(p(0, 1), p(2, 3))},
+                {asList(p(2, 3), p(0, 1)), asList(p(2, 3), p(0, 1))},
 
-                {new Point[]{p(0, 1), p(2, 3), p(4, 5)},
-                        new Point[]{p(0, 1), p(2, 3), p(4, 5)}},
-                {new Point[]{p(0, 1), p(2, 3), p(4, 5)},
-                        new Point[]{p(2, 3), p(4, 5), p(0, 1)}},
-                {new Point[]{p(0, 1), p(2, 3), p(4, 5)},
-                        new Point[]{p(4, 5), p(0, 1), p(2, 3)}},
-                {new Point[]{p(4, 5), p(0, 1), p(2, 3)},
-                        new Point[]{p(2, 3), p(4, 5), p(0, 1)}}
+                {asList(p(0, 1), p(2, 3), p(4, 5)),
+                        asList(p(0, 1), p(2, 3), p(4, 5))},
+                {asList(p(0, 1), p(2, 3), p(4, 5)),
+                        asList(p(2, 3), p(4, 5), p(0, 1))},
+                {asList(p(0, 1), p(2, 3), p(4, 5)),
+                        asList(p(4, 5), p(0, 1), p(2, 3))},
+                {asList(p(4, 5), p(0, 1), p(2, 3)),
+                        asList(p(2, 3), p(4, 5), p(0, 1))}
         };
     }
 
     @Test
     @Parameters(method = "mismatchingSequences")
-    public void itShouldMismatchShiftedSequence(Point[] actualSequence,
-                                                Point[] expectedSequence) {
+    public void itShouldMismatchShiftedSequence(List<Point> actualSequence,
+                                                List<Point> expectedSequence) {
         assertThat(actualSequence, is(not(shiftedSequence(expectedSequence))));
     }
 
     private Object[][] mismatchingSequences() {
         return new Object[][]{
-                {null, new Point[]{}},
+                {null, asList()},
 
-                {new Point[]{p(0, 1)}, new Point[]{p(2, 3)}},
+                {asList(p(0, 1)), asList(p(2, 3))},
 
-                {new Point[]{p(0, 1), p(2, 3)}, new Point[]{p(0, 1), p(0, 1)}},
-                {new Point[]{p(0, 1), p(2, 3)}, new Point[]{p(2, 3), p(2, 3)}},
+                {asList(p(0, 1), p(2, 3)), asList(p(0, 1), p(0, 1))},
+                {asList(p(0, 1), p(2, 3)), asList(p(2, 3), p(2, 3))},
 
-                {new Point[]{p(0, 1), p(2, 3), p(4, 5)},
-                        new Point[]{p(0, 1), p(2, 3), p(4, 5), p(6, 7)}},
-                {new Point[]{p(0, 1), p(2, 3), p(4, 5), p(6, 7)},
-                        new Point[]{p(0, 1), p(2, 3), p(4, 5)}}
+                {asList(p(0, 1), p(2, 3), p(4, 5)),
+                        asList(p(0, 1), p(2, 3), p(4, 5), p(6, 7))},
+                {asList(p(0, 1), p(2, 3), p(4, 5), p(6, 7)),
+                        asList(p(0, 1), p(2, 3), p(4, 5))}
         };
     }
 
@@ -81,7 +85,7 @@ public class IsShiftedSequenceTest {
         shiftedSequence(p(0, 1), p(2, 3)).describeTo(description);
 
         assertThat(description,
-                hasToString("a shifted copy of the sequence [<(0 1)>, <(2 3)>]"));
+                hasToString("a shifted copy of the sequence <[(0 1), (2 3)]>"));
     }
 
     @Test
@@ -99,7 +103,7 @@ public class IsShiftedSequenceTest {
         thrown.expectMessage(
                 "A non-null sequence is required for the shiftedSequence() matcher");
 
-        shiftedSequence((Point[]) null);
+        shiftedSequence((List<Point>) null);
     }
 
     @Test
@@ -118,31 +122,31 @@ public class IsShiftedSequenceTest {
 
     @Test
     public void itShouldMismatchOnExpectedEmptySequence() {
-        assertThat(shiftedSequence().matches(new Point[]{p(0, 1)}), is(false));
+        assertThat(shiftedSequence().matches(asList(p(0, 1))), is(false));
     }
 
     @Test
     public void itShouldDescribeMismatchOnExpectedEmptySequence() {
         Description description = new StringDescription();
 
-        shiftedSequence().describeMismatch(new Point[]{p(0, 1)}, description);
+        shiftedSequence().describeMismatch(asList(p(0, 1)), description);
 
         assertThat(description,
-                hasToString("got a nonempty sequence [<(0 1)>]"));
+                hasToString("got a nonempty sequence <[(0 1)]>"));
     }
 
     @Test
     @Parameters(method = "missingNextExpectedPointSequences")
-    public void itShouldMismatchOnMissingPoint(Point[] expected,
-                                               Point[] actual,
+    public void itShouldMismatchOnMissingPoint(List<Point> expected,
+                                               List<Point> actual,
                                                Point missing) {
         assertThat(actual, is(not(shiftedSequence(expected))));
     }
 
     @Test
     @Parameters(method = "missingNextExpectedPointSequences")
-    public void itShouldDescribeMismatchOnMissingPoint(Point[] expected,
-                                                       Point[] actual,
+    public void itShouldDescribeMismatchOnMissingPoint(List<Point> expected,
+                                                       List<Point> actual,
                                                        Point missing) {
         Description description = new StringDescription();
 
@@ -154,36 +158,36 @@ public class IsShiftedSequenceTest {
 
     private Object[][] missingNextExpectedPointSequences() {
         return new Object[][]{
-                {new Point[]{p(0, 1)},
-                        new Point[]{p(2, 3)},
+                {asList(p(0, 1)),
+                        asList(p(2, 3)),
                         p(0, 1)},
-                {new Point[]{p(0, 1), p(2, 3)},
-                        new Point[]{p(0, 1)},
+                {asList(p(0, 1), p(2, 3)),
+                        asList(p(0, 1)),
                         p(2, 3)},
-                {new Point[]{p(3, 4), p(0, 1), p(2, 3)},
-                        new Point[]{p(2, 3)},
+                {asList(p(3, 4), p(0, 1), p(2, 3)),
+                        asList(p(2, 3)),
                         p(3, 4)},
-                {new Point[]{p(3, 4), p(0, 1), p(2, 3)},
-                        new Point[]{p(2, 3), p(3, 4)},
+                {asList(p(3, 4), p(0, 1), p(2, 3)),
+                        asList(p(2, 3), p(3, 4)),
                         p(0, 1)},
-                {new Point[]{p(0, 1), p(2, 3), p(4, 5)},
-                        new Point[]{p(4, 5), p(0, 1)},
+                {asList(p(0, 1), p(2, 3), p(4, 5)),
+                        asList(p(4, 5), p(0, 1)),
                         p(2, 3)}
         };
     }
 
     @Test
     @Parameters(method = "unexpectedPointSequences")
-    public void itShouldMismatchOnUnexpectedPoint(Point[] expected,
-                                                  Point[] actual,
+    public void itShouldMismatchOnUnexpectedPoint(List<Point> expected,
+                                                  List<Point> actual,
                                                   Point unexpected) {
         assertThat(actual, is(not(shiftedSequence(expected))));
     }
 
     @Test
     @Parameters(method = "unexpectedPointSequences")
-    public void itShouldDescribeMismatchOnFirstUnexpectedPoint(Point[] expected,
-                                                               Point[] actual,
+    public void itShouldDescribeMismatchOnFirstUnexpectedPoint(List<Point> expected,
+                                                               List<Point> actual,
                                                                Point unexpected) {
         Description description = new StringDescription();
 
@@ -195,17 +199,21 @@ public class IsShiftedSequenceTest {
 
     private Object[][] unexpectedPointSequences() {
         return new Object[][]{
-                {new Point[]{p(0, 1), p(2, 3)},
-                        new Point[]{p(0, 1), p(2, 3), p(4, 5)},
+                {asList(p(0, 1), p(2, 3)),
+                        asList(p(0, 1), p(2, 3), p(4, 5)),
                         p(4, 5)},
-                {new Point[]{p(0, 1), p(2, 3)},
-                        new Point[]{p(4, 5), p(0, 1), p(2, 3)},
+                {asList(p(0, 1), p(2, 3)),
+                        asList(p(4, 5), p(0, 1), p(2, 3)),
                         p(4, 5)}
         };
     }
 
     private Point p(int x, int y) {
         return new Point(x, y);
+    }
+
+    private List<Point> asList(Point... points) {
+        return Collections.unmodifiableList(Arrays.asList(points));
     }
 
 }
