@@ -80,6 +80,20 @@ public class LineSegmentTest {
         assertThat(segment.pointIsToTheRightSide(point), is(false));
     }
 
+    @Test
+    @Parameters(method = "leftSidePoints")
+    public void itShouldFindIfThirdPointIsToTheLeftSide(LineSegment segment,
+                                                        Point point) {
+        assertThat(segment.pointIsToTheLeftSide(point), is(true));
+    }
+
+    @Test
+    @Parameters(method = "rightSidePoints,collinearPoints")
+    public void itShouldFindIfThirdPointIsNotToTheLeftSide(LineSegment segment,
+                                                           Point point) {
+        assertThat(segment.pointIsToTheLeftSide(point), is(false));
+    }
+
     private Object[][] leftSidePoints() {
         return new Object[][]{
                 {new LineSegment(new Point(1, 2), new Point(5, 6)),

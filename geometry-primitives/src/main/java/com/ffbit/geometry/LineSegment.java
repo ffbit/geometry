@@ -44,6 +44,10 @@ public class LineSegment {
         return twiceTheSignedArea(point) < 0;
     }
 
+    public boolean pointIsToTheLeftSide(Point point) {
+        return twiceTheSignedArea(point) > 0;
+    }
+
     private int twiceTheSignedArea(Point point) {
         return (b.getX() - a.getX()) * (point.getY() - a.getY())
                 - (b.getY() - a.getY()) * (point.getX() - a.getX());
