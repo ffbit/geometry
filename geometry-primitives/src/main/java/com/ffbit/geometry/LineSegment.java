@@ -48,13 +48,17 @@ public class LineSegment {
         return twiceTheSignedArea(point) > 0;
     }
 
+    public boolean pointIsCollinear(Point point) {
+        return twiceTheSignedArea(point) == 0;
+    }
+
     private int twiceTheSignedArea(Point point) {
         return (b.getX() - a.getX()) * (point.getY() - a.getY())
                 - (b.getY() - a.getY()) * (point.getX() - a.getX());
     }
 
     public boolean pointLiesOnSegment(Point point) {
-        return twiceTheSignedArea(point) == 0
+        return pointIsCollinear(point)
                 && within(a.getX(), point.getX(), b.getX())
                 && within(a.getY(), point.getY(), b.getY());
     }

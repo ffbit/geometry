@@ -94,6 +94,20 @@ public class LineSegmentTest {
         assertThat(segment.pointIsToTheLeftSide(point), is(false));
     }
 
+    @Test
+    @Parameters(method = "collinearPoints")
+    public void itShouldFindIfThirdPointIsCollinear(LineSegment segment,
+                                                    Point point) {
+        assertThat(segment.pointIsCollinear(point), is(true));
+    }
+
+    @Test
+    @Parameters(method = "rightSidePoints,leftSidePoints")
+    public void itShouldFindIfThirdPointIsNotCollinear(LineSegment segment,
+                                                       Point point) {
+        assertThat(segment.pointIsCollinear(point), is(false));
+    }
+
     private Object[][] leftSidePoints() {
         return new Object[][]{
                 {new LineSegment(new Point(1, 2), new Point(5, 6)),
