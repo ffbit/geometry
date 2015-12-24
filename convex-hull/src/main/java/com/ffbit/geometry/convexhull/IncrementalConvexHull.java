@@ -8,6 +8,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * <p>
+ * A O(N<sup>2</sup>) convex hull algorithm implementation.
+ * </p>
+ */
 public class IncrementalConvexHull implements ConvexHull {
 
     @Override

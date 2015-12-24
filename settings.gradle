@@ -20,3 +20,4 @@ rootProject.name = 'geometry'
 
 include 'geometry-primitives'
 include 'geometry-matchers'
+include 'convex-hull'

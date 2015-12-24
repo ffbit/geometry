@@ -53,9 +53,11 @@ project('geometry-matchers') {
     }
 }
 
-dependencies {
-    compile project(":geometry-primitives")
-    testCompile project(":geometry-matchers")
+project('convex-hull') {
+    dependencies {
+        compile project(":geometry-primitives")
+        testCompile project(":geometry-matchers")
+    }
 }
 
 buildscript {
