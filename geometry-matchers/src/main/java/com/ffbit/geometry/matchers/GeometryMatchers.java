@@ -5,7 +5,7 @@ import org.hamcrest.Matcher;
 
 import java.util.List;
 
-public class GeometryMatchers {
+public abstract class GeometryMatchers {
 
     public static Matcher<List<Point>> clockwiseRing() {
         return IsClockwiseRing.clockwiseRing();
